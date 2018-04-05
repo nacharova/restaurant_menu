@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% if error_message %}
+        {{ error_message }}
+    {% endif %}
+    <form action="{% url 'add_dish' %}" method="post">
+        {% csrf_token %}
+        <div>{{ form.as_ul }}</div>
+        <input type="submit" value="Добавить" />
+    </form>
+</body>
+</html>
