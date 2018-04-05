@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Сумма заказа и список блюд</title>
+</head>
+<body>
+    <h1>Сумма заказа и список блюд</h1>
+    {% for dish in checked_dishes %}
+        <li>{{ dish.name }}</li>
+    {% endfor %}
+</body>
+</html>
