@@ -18,7 +18,9 @@
             <div>
             <input type="checkbox" name="check_{{ dish.id }}" id="check{{ forloop.counter }}" value="{{ dish.id }}" />
             <label for="choice{{ forloop.counter }}">{{ dish.name }} ({{ dish.food_value }} Ккал) - {{ dish.price }} руб.</label>
-            <img src="{{ dish.image.url }}">
+            {% if dish.image %}
+                <img src="{{ dish.image.url }}">
+            {% endif %}
             </div>
         {% endfor %}
         <input type="submit" value="Отправить" />

@@ -1,13 +1,16 @@
 from django.shortcuts import render
 from .models import Dish
 from .forms import DishForm
+from .serializers import DishSerializer
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
 
 
 # главная (список блюд)
 def index(request):
-    form = DishForm
     dishes = Dish.objects.all()
-    return render(request, 'restaurant_menu/index.html', {'form': form, 'dishes': dishes, })
+    return render(request, 'restaurant_menu/index.html', {'dishes': dishes, })
 
 
 # обработка заказа
@@ -29,8 +32,7 @@ def order(request):
             })
         return render(request, 'restaurant_menu/order.html',
                       {'checked_dishes': checked_dishes, 'total_price': total_price})
-    return render(request, 'restaurant_menu/index.html', {'dishes': dishes,
-    })
+    return render(request, 'restaurant_menu/index.html', {'dishes': dishes})
 
 
 # добавление нового блюда
@@ -45,3 +47,19 @@ def add_dish(request):
     else:
         form = DishForm()
     return render(request, 'restaurant_menu/add_dish.html', {'form': form})
+
+
+@csrf_exempt
+def api(request):
+    if request.method == 'GET':
+        dishes = Dish.objects.all()
+        serializer = DishSerializer(dishes, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = DishSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
