@@ -2,16 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Добавление нового блюда</title>
 </head>
 <body>
-    {% if error_message %}
-        {{ error_message }}
+    <h1>Добавление нового блюда</h1>
+    {% if form_saved %}
+        <div>{{ form_saved }}</div>
+        <a href="{% url 'index' %}">Перейти к списку блюд</a>
+    {% else %}
+        {% if error_message %}
+            {{ error_message }}
+        {% endif %}
+        <form action="{% url 'add_dish' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>{{ form.as_ul }}</div>
+            <input type="submit" value="Добавить" />
+        </form>
     {% endif %}
-    <form action="{% url 'add_dish' %}" method="post">
-        {% csrf_token %}
-        <div>{{ form.as_ul }}</div>
-        <input type="submit" value="Добавить" />
-    </form>
 </body>
 </html>

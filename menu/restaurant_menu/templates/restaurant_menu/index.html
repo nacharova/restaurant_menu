@@ -7,21 +7,19 @@
 <body>
     <h1>Меню ресторана</h1>
     <a href="{% url 'add_dish' %}">Добавить новое блюдо</a>
-{#    {% if error_message %}#}
-{#        {{ error_message }}#}
-{#    {% endif %}#}
-{#    <form action="{% url 'order' %}" method="post">#}
-{#        {% csrf_token %}#}
-{#        {% for dish in dishes %}#}
-{#            <div>{{ form }}</div>#}
-{#        {% endfor %}#}
-{#        <input type="submit" value="Отправить" />#}
-{#    </form>#}
+    <div>
+        {% if error_message %}
+            {{ error_message }}
+        {% endif %}
+    </div>
     <form action="{% url 'order' %}" method="post">
         {% csrf_token %}
         {% for dish in dishes %}
+            <div>
             <input type="checkbox" name="check_{{ dish.id }}" id="check{{ forloop.counter }}" value="{{ dish.id }}" />
-            <label for="choice{{ forloop.counter }}">{{ dish.name }} ({{ dish.food_value }} Ккал) - {{ dish.price }} руб.</label><br/>
+            <label for="choice{{ forloop.counter }}">{{ dish.name }} ({{ dish.food_value }} Ккал) - {{ dish.price }} руб.</label>
+            <img src="{{ dish.image.url }}">
+            </div>
         {% endfor %}
         <input type="submit" value="Отправить" />
     </form>

@@ -6,8 +6,13 @@
 </head>
 <body>
     <h1>Сумма заказа и список блюд</h1>
-    {% for dish in checked_dishes %}
-        <li>{{ dish.name }}</li>
-    {% endfor %}
+    <div>
+        {% for dish in checked_dishes %}
+            {% for item in dish %}
+                <li>{{ item.name }} - {{ item.price }} руб.</li>
+            {% endfor %}
+        {% endfor %}
+    </div>
+    <h2>Сумма заказа: {{ total_price }} руб.</h2>
 </body>
 </html>
