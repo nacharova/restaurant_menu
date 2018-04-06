@@ -1,5 +1,7 @@
 Создание таблиц БД: python manage.py migrate
 Запуск проекта: python manage.py runserver
+Запуск тестов: python manage.py test restaurant_menu
+
 
 Написать на Django и django REST Framework "Меню ресторана"
 
