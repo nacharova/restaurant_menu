@@ -3,12 +3,14 @@ from .models import Dish
 from .forms import DishForm
 
 
+# главная (список блюд)
 def index(request):
     form = DishForm
     dishes = Dish.objects.all()
     return render(request, 'restaurant_menu/index.html', {'form': form, 'dishes': dishes, })
 
 
+# обработка заказа
 def order(request):
     dishes = Dish.objects.all()
     if request.method == 'POST':
@@ -27,11 +29,11 @@ def order(request):
             })
         return render(request, 'restaurant_menu/order.html',
                       {'checked_dishes': checked_dishes, 'total_price': total_price})
-    return render(request, 'restaurant_menu/index.html', {
-        'error_message': "Не выбрано ни одно блюдо.", 'dishes': dishes,
+    return render(request, 'restaurant_menu/index.html', {'dishes': dishes,
     })
 
 
+# добавление нового блюда
 def add_dish(request):
     if request.method == 'POST':
         form = DishForm(request.POST, request.FILES)
